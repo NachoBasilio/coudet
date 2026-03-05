@@ -10,11 +10,27 @@ const counterValue = String(Math.max(1, elapsedDays + 1));
 const siteName = "Coudet River";
 const pageTitle = "Cuanto tiempo lleva el Chacho en River | Coudet River";
 const pageDescription =
-  "Consulta en segundos cuanto tiempo lleva el Chacho en River, con contador actualizado y estado actual sobre Eduardo Coudet y River Plate.";
+  "Segui en vivo cuantos dias lleva Eduardo Chacho Coudet en River Plate con contador diario actualizado y contexto rapido de su ciclo.";
 const pageImage = "https://www.canal12misiones.com/wp-content/uploads/2026/02/Chacho-1.jpg";
 const canonicalUrl = "https://coudet-river.vercel.app/";
 const pageKeywords =
-  "cuanto tiempo lleva el chacho en river, coudet river, eduardo coudet river, chacho coudet river plate, coudet a river";
+  "cuanto tiempo lleva el chacho en river, contador coudet river, eduardo coudet river, chacho coudet river plate, dias de coudet en river";
+const isoPublishedTime = `${coudetDayOne}T00:00:00-03:00`;
+const isoModifiedTime = `${currentDate.toISOString().split("T")[0]}T00:00:00-03:00`;
+const faqItems = [
+  {
+    question: "Desde cuando arranca este contador de Coudet en River?",
+    answer: "El conteo arranca en 1 desde el 2026-03-05, considerado como dia 1 del ciclo."
+  },
+  {
+    question: "Cada cuanto se actualiza el numero de dias?",
+    answer: "Se actualiza todos los dias y suma una unidad por cada nueva fecha calendario."
+  },
+  {
+    question: "Que muestra exactamente este sitio?",
+    answer: "Muestra un contador simple de dias transcurridos desde el inicio del ciclo de Eduardo Coudet en River Plate."
+  }
+];
 ---
 
 <html lang="es">
@@ -24,6 +40,8 @@ const pageKeywords =
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <meta name="keywords" content={pageKeywords} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="author" content={siteName} />
@@ -41,15 +59,19 @@ const pageKeywords =
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={pageImage} />
+    <meta property="og:image:secure_url" content={pageImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="Eduardo Chacho Coudet en una imagen de actualidad" />
+    <meta property="article:published_time" content={isoPublishedTime} />
+    <meta property="article:modified_time" content={isoModifiedTime} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={pageImage} />
+    <meta name="twitter:image:alt" content="Eduardo Chacho Coudet en River Plate" />
 
     <script type="application/ld+json">
       {JSON.stringify({
@@ -67,6 +89,8 @@ const pageKeywords =
             description: pageDescription,
             url: canonicalUrl,
             inLanguage: "es-AR",
+            datePublished: isoPublishedTime,
+            dateModified: isoModifiedTime,
             isPartOf: {
               "@type": "WebSite",
               name: siteName,
@@ -82,6 +106,18 @@ const pageKeywords =
               "@type": "SportsTeam",
               name: "River Plate"
             }
+          },
+          {
+            "@type": "FAQPage",
+            inLanguage: "es-AR",
+            mainEntity: faqItems.map((item) => ({
+              "@type": "Question",
+              name: item.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.answer
+              }
+            }))
           }
         ]
       })}
@@ -166,6 +202,39 @@ const pageKeywords =
       .counter span {
         font-size: 1.05rem;
       }
+
+      .intro {
+        margin: 0;
+        max-width: 62ch;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      .faq {
+        width: 100%;
+        max-width: 62ch;
+        text-align: left;
+      }
+
+      .faq h2 {
+        margin: 0 0 0.7rem;
+        font-size: clamp(1.2rem, 3.2vw, 1.5rem);
+      }
+
+      .faq ul {
+        margin: 0;
+        padding-left: 1.15rem;
+        display: grid;
+        gap: 0.7rem;
+      }
+
+      .faq li {
+        line-height: 1.45;
+      }
+
+      .faq strong {
+        color: #121212;
+      }
     </style>
   </head>
   <body>
@@ -184,6 +253,22 @@ const pageKeywords =
         <strong>{counterValue}</strong>
         <span>Dias desde el primer dia de Coudet</span>
       </p>
+
+      <p class="intro">
+        Este contador muestra cuantos dias pasaron desde el inicio del ciclo de Eduardo Chacho Coudet en River Plate.
+        Se actualiza a diario para responder rapido la consulta: cuanto tiempo lleva Coudet en River.
+      </p>
+
+      <section class="faq" aria-labelledby="faq-title">
+        <h2 id="faq-title">Preguntas frecuentes</h2>
+        <ul>
+          {faqItems.map((item) => (
+            <li>
+              <strong>{item.question}</strong> {item.answer}
+            </li>
+          ))}
+        </ul>
+      </section>
     </main>
   </body>
 </html>
