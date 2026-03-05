@@ -1,11 +1,12 @@
 ---
-const confirmedArrivalDate = null;
+const coudetDayOne = "2026-03-05";
+const millisecondsPerDay = 86400000;
+const today = new Date();
 
-const daysUntilArrival = confirmedArrivalDate
-  ? Math.ceil((new Date(confirmedArrivalDate).getTime() - Date.now()) / 86400000)
-  : null;
-
-const counterValue = daysUntilArrival === null ? "--" : String(Math.max(0, daysUntilArrival));
+const startDate = new Date(`${coudetDayOne}T00:00:00`);
+const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+const elapsedDays = Math.floor((currentDate.getTime() - startDate.getTime()) / millisecondsPerDay);
+const counterValue = String(Math.max(1, elapsedDays + 1));
 const siteName = "Coudet River";
 const pageTitle = "Cuanto tiempo lleva el Chacho en River | Coudet River";
 const pageDescription =
@@ -181,7 +182,7 @@ const pageKeywords =
 
       <p class="counter">
         <strong>{counterValue}</strong>
-        <span>Aun no se confirma su llegada</span>
+        <span>Dias desde el primer dia de Coudet</span>
       </p>
     </main>
   </body>
