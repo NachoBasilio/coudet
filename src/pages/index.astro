@@ -1,36 +1,32 @@
 ---
-import DaysCounterIsland from "../components/DaysCounterIsland.astro";
+import DaysCounterIsland from "../components/DaysCounterIsland";
 
 const coudetDayOne = "2026-03-05";
-const millisecondsPerDay = 86400000;
 const today = new Date();
 
-const startDate = new Date(`${coudetDayOne}T00:00:00`);
 const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-const elapsedDays = Math.floor((currentDate.getTime() - startDate.getTime()) / millisecondsPerDay);
-const counterValue = String(Math.max(1, elapsedDays + 1));
 const siteName = "Coudet River";
-const pageTitle = "Cuanto tiempo lleva el Chacho en River | Coudet River";
+const pageTitle = "Cuánto tiempo lleva el Chacho en River | Coudet River";
 const pageDescription =
-  "Segui en vivo cuantos dias lleva Eduardo Chacho Coudet en River Plate con contador diario actualizado y contexto rapido de su ciclo.";
+  "Seguí en vivo cuántos días lleva Eduardo Chacho Coudet en River Plate con contador diario actualizado y contexto rápido de su ciclo.";
 const pageImage = "https://www.canal12misiones.com/wp-content/uploads/2026/02/Chacho-1.jpg";
 const canonicalUrl = "https://coudet-river.vercel.app/";
 const pageKeywords =
-  "cuanto tiempo lleva el chacho en river, contador coudet river, eduardo coudet river, chacho coudet river plate, dias de coudet en river";
+  "cuánto tiempo lleva el chacho en river, contador coudet river, eduardo coudet river, chacho coudet river plate, días de coudet en river";
 const isoPublishedTime = `${coudetDayOne}T00:00:00-03:00`;
 const isoModifiedTime = `${currentDate.toISOString().split("T")[0]}T00:00:00-03:00`;
 const faqItems = [
   {
-    question: "Desde cuando arranca este contador de Coudet en River?",
-    answer: "El conteo arranca en 1 desde el 2026-03-05, considerado como dia 1 del ciclo."
+    question: "¿Desde cuándo arranca este contador de Coudet en River?",
+    answer: "El conteo arranca en 1 desde el 2026-03-05, considerado como día 1 del ciclo."
   },
   {
-    question: "Cada cuanto se actualiza el numero de dias?",
-    answer: "Se actualiza todos los dias y suma una unidad por cada nueva fecha calendario."
+    question: "¿Cada cuánto se actualiza el número de días?",
+    answer: "Se actualiza todos los días y suma una unidad por cada nueva fecha calendario."
   },
   {
-    question: "Que muestra exactamente este sitio?",
-    answer: "Muestra un contador simple de dias transcurridos desde el inicio del ciclo de Eduardo Coudet en River Plate."
+    question: "¿Qué muestra exactamente este sitio?",
+    answer: "Muestra un contador simple de días transcurridos desde el inicio del ciclo de Eduardo Coudet en River Plate."
   }
 ];
 ---
@@ -190,18 +186,18 @@ const faqItems = [
         pointer-events: none;
       }
 
-      .counter {
+      :global(.counter) {
         text-align: center;
         line-height: 1.3;
       }
 
-      .counter strong {
+      :global(.counter strong) {
         display: block;
         font-size: clamp(2rem, 6vw, 2.6rem);
         color: var(--river-red);
       }
 
-      .counter span {
+      :global(.counter span) {
         font-size: 1.05rem;
       }
 
@@ -241,7 +237,7 @@ const faqItems = [
   </head>
   <body>
     <main>
-      <h1>CUANTO TIEMPO LLEVA EL CHACHO EN RIVER</h1>
+      <h1>CUÁNTO TIEMPO LLEVA EL CHACHO EN RIVER</h1>
 
       <figure class="image-wrap">
         <img
@@ -251,11 +247,11 @@ const faqItems = [
         />
       </figure>
 
-      <DaysCounterIsland startDate={coudetDayOne} initialValue={counterValue} />
+      <DaysCounterIsland client:load startDate={coudetDayOne} />
 
       <p class="intro">
-        Este contador muestra cuantos dias pasaron desde el inicio del ciclo de Eduardo Chacho Coudet en River Plate.
-        Se actualiza a diario para responder rapido la consulta: cuanto tiempo lleva Coudet en River.
+        Este contador muestra cuántos días pasaron desde el inicio del ciclo de Eduardo Chacho Coudet en River Plate.
+        Se actualiza a diario para responder rápido la consulta: cuánto tiempo lleva Coudet en River.
       </p>
 
       <section class="faq" aria-labelledby="faq-title">
