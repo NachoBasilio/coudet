@@ -1,0 +1,39 @@
+---
+const { startDate, initialValue } = Astro.props;
+---
+
+<p class="counter" data-counter-island data-start-date={startDate}>
+  <strong data-counter-value>{initialValue}</strong>
+  <span>Dias desde el primer dia de Coudet</span>
+</p>
+
+<script is:inline>
+  (() => {
+    const containers = document.querySelectorAll("[data-counter-island]");
+    if (!containers.length) return;
+
+    const millisecondsPerDay = 86400000;
+
+    const calculateCounterValue = (startDateValue) => {
+      const argentinaToday = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "America/Argentina/Buenos_Aires"
+      }).format(new Date());
+
+      const startTime = Date.parse(`${startDateValue}T00:00:00Z`);
+      const currentTime = Date.parse(`${argentinaToday}T00:00:00Z`);
+      if (Number.isNaN(startTime) || Number.isNaN(currentTime)) return null;
+
+      const elapsedDays = Math.floor((currentTime - startTime) / millisecondsPerDay);
+      return String(Math.max(1, elapsedDays + 1));
+    };
+
+    containers.forEach((container) => {
+      const startDateValue = container.getAttribute("data-start-date");
+      const valueElement = container.querySelector("[data-counter-value]");
+      if (!startDateValue || !valueElement) return;
+
+      const value = calculateCounterValue(startDateValue);
+      if (value) valueElement.textContent = value;
+    });
+  })();
+</script>

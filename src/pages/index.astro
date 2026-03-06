@@ -1,4 +1,6 @@
 ---
+import DaysCounterIsland from "../components/DaysCounterIsland.astro";
+
 const coudetDayOne = "2026-03-05";
 const millisecondsPerDay = 86400000;
 const today = new Date();
@@ -249,10 +251,7 @@ const faqItems = [
         />
       </figure>
 
-      <p class="counter" data-start-date={coudetDayOne}>
-        <strong id="counter-value">{counterValue}</strong>
-        <span>Dias desde el primer dia de Coudet</span>
-      </p>
+      <DaysCounterIsland startDate={coudetDayOne} initialValue={counterValue} />
 
       <p class="intro">
         Este contador muestra cuantos dias pasaron desde el inicio del ciclo de Eduardo Chacho Coudet en River Plate.
@@ -271,29 +270,5 @@ const faqItems = [
       </section>
     </main>
 
-    <script is:inline>
-      (() => {
-        const counterElement = document.getElementById("counter-value");
-        const counterContainer = document.querySelector("[data-start-date]");
-        if (!counterElement || !counterContainer) return;
-
-        const startDateValue = counterContainer.getAttribute("data-start-date");
-        if (!startDateValue) return;
-
-        const millisecondsPerDay = 86400000;
-        const argentinaToday = new Intl.DateTimeFormat("en-CA", {
-          timeZone: "America/Argentina/Buenos_Aires"
-        }).format(new Date());
-
-        const startTime = Date.parse(`${startDateValue}T00:00:00Z`);
-        const currentTime = Date.parse(`${argentinaToday}T00:00:00Z`);
-
-        if (Number.isNaN(startTime) || Number.isNaN(currentTime)) return;
-
-        const elapsedDays = Math.floor((currentTime - startTime) / millisecondsPerDay);
-        const liveCounterValue = String(Math.max(1, elapsedDays + 1));
-        counterElement.textContent = liveCounterValue;
-      })();
-    </script>
   </body>
 </html>
