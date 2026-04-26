@@ -6,19 +6,23 @@ const today = new Date();
 
 const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 const siteName = "Coudet River";
-const pageTitle = "Cuánto tiempo lleva el Chacho en River | Coudet River";
+const pageTitle = "Hace cuánto está Coudet en River hoy | Días del Chacho en River";
 const pageDescription =
-  "Seguí en vivo cuántos días lleva Eduardo Chacho Coudet en River Plate con contador diario actualizado y contexto rápido de su ciclo.";
+  "Consultá en segundos hace cuánto está Coudet en River hoy, cuántos días lleva el Chacho en el cargo y desde cuándo arrancó su ciclo en River Plate.";
 const pageImage = "https://www.canal12misiones.com/wp-content/uploads/2026/02/Chacho-1.jpg";
 const canonicalUrl = "https://coudet-river.vercel.app/";
 const pageKeywords =
-  "cuánto tiempo lleva el chacho en river, contador coudet river, eduardo coudet river, chacho coudet river plate, días de coudet en river";
+  "hace cuanto esta coudet en river, hace cuánto está coudet, cuanto tiempo lleva coudet en river, desde cuando esta coudet en river, cuantos dias lleva coudet, contador coudet river, días de coudet en river";
 const isoPublishedTime = `${coudetDayOne}T00:00:00-03:00`;
 const isoModifiedTime = `${currentDate.toISOString().split("T")[0]}T00:00:00-03:00`;
 const faqItems = [
   {
     question: "¿Desde cuándo arranca este contador de Coudet en River?",
     answer: "El conteo arranca en 1 desde el 2026-03-05, considerado como día 1 del ciclo."
+  },
+  {
+    question: "¿Hace cuánto está Coudet en River hoy?",
+    answer: "Este sitio responde esa consulta mostrando los días exactos transcurridos desde el inicio de su ciclo."
   },
   {
     question: "¿Cada cuánto se actualiza el número de días?",
@@ -197,6 +201,12 @@ const faqItems = [
         color: var(--river-red);
       }
 
+      :global(.counter-loader) {
+        min-width: 3ch;
+        letter-spacing: 0.2em;
+        animation: pulse 1.1s ease-in-out infinite;
+      }
+
       :global(.counter span) {
         font-size: 1.05rem;
       }
@@ -206,6 +216,22 @@ const faqItems = [
         max-width: 62ch;
         font-size: 1rem;
         line-height: 1.5;
+      }
+
+      .secondary-query {
+        margin: 0;
+        max-width: 62ch;
+        text-wrap: balance;
+        line-height: 1.45;
+      }
+
+      .secondary-query h2 {
+        margin: 0 0 0.5rem;
+        font-size: clamp(1.15rem, 3vw, 1.35rem);
+      }
+
+      .secondary-query p {
+        margin: 0;
       }
 
       .faq {
@@ -233,11 +259,21 @@ const faqItems = [
       .faq strong {
         color: #121212;
       }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.35;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body>
     <main>
-      <h1>CUÁNTO TIEMPO LLEVA EL CHACHO EN RIVER</h1>
+      <h1>HACE CUÁNTO ESTÁ COUDET EN RIVER</h1>
 
       <figure class="image-wrap">
         <img
@@ -251,8 +287,16 @@ const faqItems = [
 
       <p class="intro">
         Este contador muestra cuántos días pasaron desde el inicio del ciclo de Eduardo Chacho Coudet en River Plate.
-        Se actualiza a diario para responder rápido la consulta: cuánto tiempo lleva Coudet en River.
+        Se actualiza a diario para responder rápido búsquedas como: hace cuánto está Coudet en River o cuánto tiempo lleva el Chacho en el cargo.
       </p>
+
+      <section class="secondary-query" aria-labelledby="secondary-query-title">
+        <h2 id="secondary-query-title">¿Desde cuándo está Coudet en River?</h2>
+        <p>
+          El conteo toma como punto de partida el 2026-03-05 y suma una unidad por cada nueva fecha.
+          Si buscaste “hace cuánto está Coudet” o “cuántos días lleva Coudet en River”, acá tenés la respuesta al instante.
+        </p>
+      </section>
 
       <section class="faq" aria-labelledby="faq-title">
         <h2 id="faq-title">Preguntas frecuentes</h2>
