@@ -1,5 +1,5 @@
 /** @jsxImportSource preact */
-import { useMemo } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 
 type DaysCounterIslandProps = {
   startDate: string;
@@ -22,12 +22,25 @@ const calculateCounterValue = (startDate: string): string => {
 };
 
 export default function DaysCounterIsland({ startDate }: DaysCounterIslandProps) {
-  const counterValue = useMemo(() => calculateCounterValue(startDate), [startDate]);
+  const [counterValue, setCounterValue] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCounterValue(calculateCounterValue(startDate));
+  }, [startDate]);
 
   return (
-    <p className="counter">
-      <strong>{counterValue}</strong>
-      <span>Días desde el primer día de Coudet</span>
+    <p className="counter" aria-live="polite">
+      {counterValue === null ? (
+        <>
+          <strong className="counter-loader" aria-hidden="true">•••</strong>
+          <span>Calculando días...</span>
+        </>
+      ) : (
+        <>
+          <strong>{counterValue}</strong>
+          <span>Días desde el primer día de Coudet</span>
+        </>
+      )}
     </p>
   );
 }
