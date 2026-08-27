@@ -2,6 +2,7 @@
 import DaysCounterIsland from "../components/DaysCounterIsland";
 
 const coudetDayOne = "2026-03-05";
+const coudetDayOneLabel = "5 de marzo de 2026";
 const today = new Date();
 
 const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -10,6 +11,7 @@ const pageTitle = "Hace cuánto está Coudet en River hoy | Días del Chacho en 
 const pageDescription =
   "Consultá en segundos hace cuánto está Coudet en River hoy, cuántos días lleva el Chacho en el cargo y desde cuándo arrancó su ciclo en River Plate.";
 const pageImage = "https://www.canal12misiones.com/wp-content/uploads/2026/02/Chacho-1.jpg";
+const secretImage = "https://www.ole.com.ar/images/2010/04/13/BJQLTgq--_720x0.jpg";
 const canonicalUrl = "https://coudet-river.vercel.app/";
 const pageKeywords =
   "hace cuanto esta coudet en river, hace cuánto está coudet, cuanto tiempo lleva coudet en river, desde cuando esta coudet en river, cuantos dias lleva coudet, contador coudet river, días de coudet en river";
@@ -18,7 +20,7 @@ const isoModifiedTime = `${currentDate.toISOString().split("T")[0]}T00:00:00-03:
 const faqItems = [
   {
     question: "¿Desde cuándo arranca este contador de Coudet en River?",
-    answer: "El conteo arranca en 1 desde el 2026-03-05, considerado como día 1 del ciclo."
+    answer: `El conteo arranca en 1 desde el ${coudetDayOneLabel}, considerado como día 1 del ciclo.`
   },
   {
     question: "¿Hace cuánto está Coudet en River hoy?",
@@ -47,7 +49,7 @@ const faqItems = [
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="author" content={siteName} />
-    <meta name="theme-color" content="#d90f1f" />
+    <meta name="theme-color" content="#0d0e12" />
     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/a/a8/Escudo-River-1930.png" />
 
     <link rel="canonical" href={canonicalUrl} />
@@ -126,46 +128,103 @@ const faqItems = [
     </script>
     <style>
       :root {
-        --river-red: #d90f1f;
-        --white: #ffffff;
+        --river-red: #e2172c;
+        --river-red-deep: #a80d1c;
+        --bg: #0d0e12;
+        --surface: rgba(255, 255, 255, 0.045);
+        --surface-strong: rgba(255, 255, 255, 0.07);
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f2f3f5;
+        --text-muted: #a7abb4;
+        --radius: 18px;
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
+        padding: clamp(1.5rem, 5vw, 3.5rem) 1rem calc(5.5rem + env(safe-area-inset-bottom));
         display: grid;
-        place-items: center;
-        font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-        background: linear-gradient(165deg, #f8f8f8 0%, #ececec 100%);
-        color: #1d1d1d;
+        place-items: start center;
+        font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* River's diagonal "banda" as an ambient backdrop. */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: -20%;
+        z-index: -1;
+        background:
+          radial-gradient(60% 50% at 50% 0%, rgba(226, 23, 44, 0.22) 0%, transparent 70%),
+          linear-gradient(
+            118deg,
+            transparent 0 44%,
+            rgba(226, 23, 44, 0.13) 44% 56%,
+            transparent 56% 100%
+          );
+        pointer-events: none;
       }
 
       main {
-        width: min(92vw, 760px);
+        width: min(94vw, 720px);
         display: grid;
-        gap: 1.2rem;
+        gap: clamp(1.1rem, 3vw, 1.6rem);
         justify-items: center;
         text-align: center;
       }
 
+      .eyebrow {
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.4rem 0.95rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--surface);
+        font-size: 0.76rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--river-red);
+        box-shadow: 0 0 0 4px rgba(226, 23, 44, 0.22);
+      }
+
       h1 {
         margin: 0;
-        font-size: clamp(1.8rem, 5.4vw, 2.7rem);
-        line-height: 1.12;
-        letter-spacing: -0.02em;
+        font-size: clamp(1.9rem, 6.2vw, 3.1rem);
+        line-height: 1.06;
+        letter-spacing: -0.03em;
         text-wrap: balance;
       }
 
       .image-wrap {
         position: relative;
         margin: 0;
-        border: 8px solid var(--white);
-        outline: 4px solid var(--river-red);
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
         overflow: hidden;
       }
 
@@ -173,7 +232,10 @@ const faqItems = [
         display: block;
         width: 100%;
         height: auto;
-        filter: grayscale(1) contrast(1.12) brightness(0.98) saturate(0);
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        object-position: 50% 28%;
+        filter: grayscale(1) contrast(1.14) brightness(0.92);
       }
 
       .image-wrap::after {
@@ -183,22 +245,66 @@ const faqItems = [
         background:
           linear-gradient(
             130deg,
-            rgba(217, 15, 31, 0.35) 0%,
-            rgba(217, 15, 31, 0.08) 44%,
-            rgba(255, 255, 255, 0.18) 100%
-          );
+            rgba(226, 23, 44, 0.4) 0%,
+            rgba(226, 23, 44, 0.05) 48%,
+            transparent 100%
+          ),
+          linear-gradient(to top, rgba(13, 14, 18, 0.85) 0%, transparent 55%);
         pointer-events: none;
       }
 
+      .card {
+        width: 100%;
+        padding: clamp(1.2rem, 4vw, 1.9rem);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--surface);
+        backdrop-filter: blur(10px);
+      }
+
+      .counter-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+        box-shadow: var(--shadow);
+      }
+
+      .counter-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--river-red), transparent);
+      }
+
+      .counter-since {
+        margin: 0.9rem 0 0;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      .counter-since strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
       :global(.counter) {
+        margin: 0;
         text-align: center;
-        line-height: 1.3;
+        line-height: 1.2;
       }
 
       :global(.counter strong) {
         display: block;
-        font-size: clamp(2rem, 6vw, 2.6rem);
-        color: var(--river-red);
+        font-size: clamp(4rem, 19vw, 7.5rem);
+        font-weight: 800;
+        line-height: 0.92;
+        letter-spacing: -0.05em;
+        font-variant-numeric: tabular-nums;
+        background: linear-gradient(180deg, #ff4b5e, var(--river-red-deep));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
 
       :global(.counter-loader) {
@@ -208,56 +314,200 @@ const faqItems = [
       }
 
       :global(.counter span) {
-        font-size: 1.05rem;
+        display: block;
+        margin-top: 0.55rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
       }
 
       .intro {
         margin: 0;
         max-width: 62ch;
         font-size: 1rem;
-        line-height: 1.5;
+        line-height: 1.6;
+        color: var(--text-muted);
       }
 
       .secondary-query {
-        margin: 0;
-        max-width: 62ch;
-        text-wrap: balance;
-        line-height: 1.45;
+        text-align: left;
       }
 
       .secondary-query h2 {
-        margin: 0 0 0.5rem;
-        font-size: clamp(1.15rem, 3vw, 1.35rem);
+        margin: 0 0 0.6rem;
+        font-size: clamp(1.15rem, 3vw, 1.4rem);
+        letter-spacing: -0.015em;
       }
 
       .secondary-query p {
         margin: 0;
+        line-height: 1.6;
+        color: var(--text-muted);
       }
 
       .faq {
         width: 100%;
-        max-width: 62ch;
         text-align: left;
       }
 
       .faq h2 {
-        margin: 0 0 0.7rem;
+        margin: 0 0 0.9rem;
         font-size: clamp(1.2rem, 3.2vw, 1.5rem);
+        letter-spacing: -0.015em;
       }
 
-      .faq ul {
-        margin: 0;
-        padding-left: 1.15rem;
+      .faq-list {
         display: grid;
-        gap: 0.7rem;
+        gap: 0.55rem;
       }
 
-      .faq li {
-        line-height: 1.45;
+      .faq details {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        transition: border-color 0.2s ease;
       }
 
-      .faq strong {
-        color: #121212;
+      .faq details[open] {
+        border-color: rgba(226, 23, 44, 0.45);
+      }
+
+      .faq summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.85rem 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+      }
+
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq summary::after {
+        content: "+";
+        flex: none;
+        font-size: 1.25rem;
+        line-height: 1;
+        color: var(--river-red);
+        transition: transform 0.2s ease;
+      }
+
+      .faq details[open] summary::after {
+        transform: rotate(45deg);
+      }
+
+      .faq p {
+        margin: 0;
+        padding: 0 1rem 0.95rem;
+        line-height: 1.6;
+        color: var(--text-muted);
+      }
+
+      .site-footer {
+        margin: 0;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(167, 171, 180, 0.6);
+      }
+
+      /* Floating help trigger + photo dialog */
+      .help-trigger {
+        position: fixed;
+        right: clamp(1rem, 4vw, 2rem);
+        bottom: calc(clamp(1rem, 4vw, 2rem) + env(safe-area-inset-bottom));
+        z-index: 10;
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        background: linear-gradient(180deg, var(--river-red), var(--river-red-deep));
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: 0 12px 30px rgba(226, 23, 44, 0.4);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .help-trigger:hover,
+      .help-trigger:focus-visible {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 18px 38px rgba(226, 23, 44, 0.55);
+      }
+
+      .photo-dialog {
+        width: min(92vw, 720px);
+        padding: 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: #14161c;
+        color: var(--text);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .photo-dialog::backdrop {
+        background: rgba(6, 7, 10, 0.78);
+        backdrop-filter: blur(4px);
+      }
+
+      .photo-dialog[open] {
+        animation: dialog-in 0.22s ease-out;
+      }
+
+      .photo-dialog img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .photo-dialog figure {
+        margin: 0;
+      }
+
+      .photo-dialog figcaption {
+        padding: 0.85rem 1.1rem 1.1rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        color: var(--text-muted);
+      }
+
+      .dialog-close {
+        position: absolute;
+        top: 0.7rem;
+        right: 0.7rem;
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 50%;
+        background: rgba(13, 14, 18, 0.72);
+        color: #fff;
+        font-size: 1.1rem;
+        line-height: 1;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+      }
+
+      .dialog-close:hover,
+      .dialog-close:focus-visible {
+        background: var(--river-red);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--river-red);
+        outline-offset: 3px;
       }
 
       @keyframes pulse {
@@ -269,11 +519,30 @@ const faqItems = [
           opacity: 1;
         }
       }
+
+      @keyframes dialog-in {
+        from {
+          opacity: 0;
+          transform: translateY(12px) scale(0.97);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body>
     <main>
-      <h1>HACE CUÁNTO ESTÁ COUDET EN RIVER</h1>
+      <p class="eyebrow">River Plate · Ciclo Coudet</p>
+
+      <h1>Hace cuánto está Coudet en River</h1>
 
       <figure class="image-wrap">
         <img
@@ -283,32 +552,61 @@ const faqItems = [
         />
       </figure>
 
-      <DaysCounterIsland client:load startDate={coudetDayOne} />
+      <section class="card counter-card" aria-label="Días de Coudet en River">
+        <DaysCounterIsland client:load startDate={coudetDayOne} />
+        <p class="counter-since">Desde el <strong>{coudetDayOneLabel}</strong></p>
+      </section>
 
       <p class="intro">
         Este contador muestra cuántos días pasaron desde el inicio del ciclo de Eduardo Chacho Coudet en River Plate.
         Se actualiza a diario para responder rápido búsquedas como: hace cuánto está Coudet en River o cuánto tiempo lleva el Chacho en el cargo.
       </p>
 
-      <section class="secondary-query" aria-labelledby="secondary-query-title">
+      <section class="card secondary-query" aria-labelledby="secondary-query-title">
         <h2 id="secondary-query-title">¿Desde cuándo está Coudet en River?</h2>
         <p>
-          El conteo toma como punto de partida el 2026-03-05 y suma una unidad por cada nueva fecha.
+          El conteo toma como punto de partida el {coudetDayOneLabel} y suma una unidad por cada nueva fecha.
           Si buscaste “hace cuánto está Coudet” o “cuántos días lleva Coudet en River”, acá tenés la respuesta al instante.
         </p>
       </section>
 
       <section class="faq" aria-labelledby="faq-title">
         <h2 id="faq-title">Preguntas frecuentes</h2>
-        <ul>
+        <div class="faq-list">
           {faqItems.map((item) => (
-            <li>
-              <strong>{item.question}</strong> {item.answer}
-            </li>
+            <details>
+              <summary>{item.question}</summary>
+              <p>{item.answer}</p>
+            </details>
           ))}
-        </ul>
+        </div>
       </section>
+
+      <p class="site-footer">Contador no oficial · Hincha data</p>
     </main>
 
+    <button type="button" class="help-trigger" aria-label="Ver la foto" data-open-photo>?</button>
+
+    <dialog class="photo-dialog" data-photo-dialog aria-label="Foto de archivo">
+      <button type="button" class="dialog-close" aria-label="Cerrar" data-close-photo>✕</button>
+      <figure>
+        <img src={secretImage} alt="Foto de archivo de Olé, 13 de abril de 2010" loading="lazy" />
+        <figcaption>Foto de archivo — Olé, 13 de abril de 2010.</figcaption>
+      </figure>
+    </dialog>
+
+    <script>
+      const dialog = document.querySelector("[data-photo-dialog]");
+      const openButton = document.querySelector("[data-open-photo]");
+      const closeButton = document.querySelector("[data-close-photo]");
+
+      openButton?.addEventListener("click", () => dialog?.showModal());
+      closeButton?.addEventListener("click", () => dialog?.close());
+
+      // Clicking the backdrop resolves to the dialog element itself.
+      dialog?.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    </script>
   </body>
 </html>
