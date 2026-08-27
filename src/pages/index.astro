@@ -1,46 +1,48 @@
 ---
-import DaysCounterIsland from "../components/DaysCounterIsland";
 import { calculateDaysSince, getArgentinaDate } from "../lib/days-counter";
 
-const coudetDayOne = "2026-03-05";
-const coudetDayOneLabel = "5 de marzo de 2026";
+const coudetDayOne = "2026-03-04";
+const coudetDayOneLabel = "4 de marzo de 2026";
+// The cycle ended: the counter is frozen at its final value instead of tracking "today".
+const coudetLastDay = "2026-08-27";
+const coudetLastDayLabel = "27 de agosto de 2026";
 const argentinaToday = getArgentinaDate();
 
-const daysInCharge = calculateDaysSince(coudetDayOne, argentinaToday);
+const daysInCharge = calculateDaysSince(coudetDayOne, coudetLastDay);
 const daysLabel = daysInCharge === 1 ? "1 día" : `${daysInCharge} días`;
-const answerSentence = `Coudet lleva ${daysLabel} en River, contando desde el ${coudetDayOneLabel}.`;
+const answerSentence = `Coudet estuvo ${daysLabel} en River, del ${coudetDayOneLabel} al ${coudetLastDayLabel}.`;
 
 const siteName = "Coudet River";
-const pageTitle = "Hace cuánto está Coudet en River hoy | Días del Chacho en River";
+const pageTitle = `Cuánto tiempo estuvo Coudet en River | ${daysInCharge} días del Chacho`;
 const pageDescription =
-  `${answerSentence} Contador actualizado todos los días con cuánto tiempo lleva el Chacho en el cargo en River Plate.`;
+  `${answerSentence} El ${coudetLastDayLabel} se confirmó su salida y el contador quedó congelado en ${daysInCharge}.`;
 const pageImage = "https://www.canal12misiones.com/wp-content/uploads/2026/02/Chacho-1.jpg";
 const secretImage = "https://www.ole.com.ar/images/2010/04/13/BJQLTgq--_720x0.jpg";
 const canonicalUrl = "https://coudetenriver.site/";
 const pageKeywords =
-  "hace cuanto esta coudet en river, hace cuánto está coudet, cuanto tiempo lleva coudet en river, desde cuando esta coudet en river, cuantos dias lleva coudet, contador coudet river, días de coudet en river";
+  "hace cuanto esta coudet en river, cuanto tiempo estuvo coudet en river, cuando se fue coudet de river, desde cuando estuvo coudet en river, cuantos dias duro el ciclo de coudet, contador coudet river, días de coudet en river";
 const isoPublishedTime = `${coudetDayOne}T00:00:00-03:00`;
 const isoModifiedTime = `${argentinaToday}T00:00:00-03:00`;
 const faqItems = [
   {
-    question: "¿Hace cuánto está Coudet en River?",
-    answer: `${answerSentence} El contador suma un día por cada nueva fecha del calendario.`
+    question: "¿Cuánto tiempo estuvo Coudet en River?",
+    answer: `${answerSentence} Ese es el total definitivo del ciclo.`
   },
   {
-    question: "¿Cuántos días lleva Coudet en River?",
-    answer: `Lleva ${daysLabel} al día de hoy, tomando el ${coudetDayOneLabel} como día 1 del ciclo.`
+    question: "¿Cuándo se fue Coudet de River?",
+    answer: `El ${coudetLastDayLabel} se confirmó la salida de Eduardo Coudet de River Plate. Ese día quedó como el último de su ciclo.`
   },
   {
-    question: "¿Desde cuándo está Coudet en River?",
-    answer: `Desde el ${coudetDayOneLabel}, fecha que este contador considera el primer día de su ciclo en River Plate.`
+    question: "¿Cuántos días duró el ciclo de Coudet en River?",
+    answer: `Duró ${daysLabel}, tomando el ${coudetDayOneLabel} como día 1 y el ${coudetLastDayLabel} como día final.`
   },
   {
-    question: "¿Cada cuánto se actualiza el número de días?",
-    answer: "Se actualiza todos los días y suma una unidad por cada nueva fecha calendario."
+    question: "¿El contador sigue sumando días?",
+    answer: `No. El contador se detuvo el ${coudetLastDayLabel} y quedó congelado en ${daysInCharge}.`
   },
   {
     question: "¿Qué muestra exactamente este sitio?",
-    answer: "Muestra un contador simple de días transcurridos desde el inicio del ciclo de Eduardo Coudet en River Plate."
+    answer: "Muestra cuántos días duró el ciclo de Eduardo Coudet en River Plate, desde su primer día hasta el día en que se confirmó su salida."
   }
 ];
 ---
@@ -121,7 +123,13 @@ const faqItems = [
             about: {
               "@type": "Person",
               name: "Eduardo Coudet",
-              alternateName: "Chacho Coudet"
+              alternateName: "Chacho Coudet",
+              hasOccupation: {
+                "@type": "Occupation",
+                name: "Director técnico de River Plate",
+                startDate: coudetDayOne,
+                endDate: coudetLastDay
+              }
             },
             mainEntity: {
               "@type": "SportsTeam",
@@ -294,6 +302,22 @@ const faqItems = [
         background: linear-gradient(90deg, transparent, var(--river-red), transparent);
       }
 
+      .final-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0 0 1.1rem;
+        padding: 0.35rem 0.85rem;
+        border: 1px solid rgba(226, 23, 44, 0.45);
+        border-radius: 999px;
+        background: rgba(226, 23, 44, 0.12);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #ff8d99;
+      }
+
       .counter-since {
         margin: 0.9rem 0 0;
         font-size: 0.9rem;
@@ -305,13 +329,13 @@ const faqItems = [
         font-weight: 600;
       }
 
-      :global(.counter) {
+      .counter {
         margin: 0;
         text-align: center;
         line-height: 1.2;
       }
 
-      :global(.counter strong) {
+      .counter strong {
         display: block;
         font-size: clamp(4rem, 19vw, 7.5rem);
         font-weight: 800;
@@ -324,7 +348,7 @@ const faqItems = [
         color: transparent;
       }
 
-      :global(.counter span) {
+      .counter span {
         display: block;
         margin-top: 0.55rem;
         font-size: 0.82rem;
@@ -567,13 +591,13 @@ const faqItems = [
   </head>
   <body>
     <main>
-      <p class="eyebrow">River Plate · Ciclo Coudet</p>
+      <p class="eyebrow">River Plate · Ciclo Coudet cerrado</p>
 
-      <h1>Hace cuánto está Coudet en River</h1>
+      <h1>Cuánto tiempo estuvo Coudet en River</h1>
 
       <!-- Direct answer in server-rendered HTML: this is what search snippets quote. -->
       <p class="answer">
-        Coudet lleva <strong>{daysLabel}</strong> en River, contando desde el {coudetDayOneLabel}.
+        Coudet estuvo <strong>{daysLabel}</strong> en River, del {coudetDayOneLabel} al {coudetLastDayLabel}.
       </p>
 
       <figure class="image-wrap">
@@ -584,30 +608,37 @@ const faqItems = [
         />
       </figure>
 
-      <section class="card counter-card" aria-label="Días de Coudet en River">
-        <DaysCounterIsland client:load startDate={coudetDayOne} initialValue={daysInCharge} />
-        <p class="counter-since">Desde el <strong>{coudetDayOneLabel}</strong></p>
+      <section class="card counter-card" aria-label="Días que duró el ciclo de Coudet en River">
+        <p class="final-badge">Contador detenido</p>
+        <p class="counter">
+          <strong>{daysInCharge}</strong>
+          <span>Días que duró el ciclo de Coudet</span>
+        </p>
+        <p class="counter-since">
+          Del <strong>{coudetDayOneLabel}</strong> al <strong>{coudetLastDayLabel}</strong>
+        </p>
       </section>
 
       <p class="intro">
-        Este contador muestra cuántos días pasaron desde el inicio del ciclo de Eduardo Chacho Coudet en River Plate.
-        Se actualiza a diario para responder rápido búsquedas como: hace cuánto está Coudet en River o cuánto tiempo lleva el Chacho en el cargo.
+        El {coudetLastDayLabel} se confirmó la salida de Eduardo Chacho Coudet de River Plate.
+        Ese día fue el último de su ciclo, así que el contador dejó de sumar y quedó congelado en {daysInCharge}:
+        el total definitivo de días que el Chacho estuvo al frente del plantel.
       </p>
 
       <section class="card secondary-query" aria-labelledby="secondary-query-title">
-        <h2 id="secondary-query-title">¿Desde cuándo está Coudet en River?</h2>
+        <h2 id="secondary-query-title">¿Cuándo se fue Coudet de River?</h2>
         <p>
-          Coudet está en River desde el {coudetDayOneLabel}, es decir hace {daysLabel}.
-          El conteo toma esa fecha como día 1 y suma una unidad por cada nueva fecha del calendario.
+          La salida se confirmó el {coudetLastDayLabel}. El ciclo había empezado el {coudetDayOneLabel},
+          tomado acá como día 1, y ese último día cerró la cuenta en {daysLabel}.
         </p>
       </section>
 
       <section class="card secondary-query" aria-labelledby="how-long-title">
-        <h2 id="how-long-title">¿Cuánto tiempo lleva el Chacho en el cargo?</h2>
+        <h2 id="how-long-title">¿Cuánto tiempo estuvo el Chacho en el cargo?</h2>
         <p>
-          Al día de hoy, {daysLabel} al frente del plantel de River Plate.
-          Si buscaste “hace cuánto está Coudet”, “cuántos días lleva Coudet en River” o
-          “desde cuándo dirige el Chacho”, la respuesta es la misma: {daysLabel}.
+          {daysLabel} al frente del plantel de River Plate.
+          Si buscaste “hace cuánto está Coudet”, “cuántos días duró el ciclo del Chacho” o
+          “cuándo se fue Coudet de River”, la respuesta es la misma: {daysLabel}, hasta el {coudetLastDayLabel}.
         </p>
       </section>
 
