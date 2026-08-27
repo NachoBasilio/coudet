@@ -17,9 +17,10 @@ Landing page en Astro enfocada en SEO para la busqueda "cuanto tiempo lleva el C
 
 - `src/pages/index.astro`: pagina principal (H1, contador, metadatos SEO y schema)
 - `public/robots.txt`: reglas de crawling
-- `public/sitemap.xml`: sitemap del sitio
-- `netlify.toml`: configuracion de build/publish para Netlify
-- `vercel.json`: headers de seguridad y cache
+- `src/pages/sitemap.xml.ts`: sitemap generado en build con `lastmod` real
+- `src/lib/days-counter.ts`: calculo de dias compartido entre build y cliente
+- `netlify.toml`: build, publish y headers de seguridad/cache
+- `.github/workflows/daily-rebuild.yml`: redeploy diario para refrescar el contador
 
 ## Deploy
 
@@ -29,18 +30,20 @@ Este repo incluye `netlify.toml` con:
 
 - `command = "npm run build"`
 - `publish = "dist"`
+- headers de seguridad (CSP, HSTS, X-Frame-Options) y politicas de cache
 
-Con eso Netlify despliega correctamente el sitio estatico.
+El sitio vive en https://coudetenriver.site/
 
-### Vercel
-
-Este repo incluye `vercel.json` con headers de seguridad y politicas de cache.
+El contador se hornea en el HTML en tiempo de build, asi que el deploy diario
+(`.github/workflows/daily-rebuild.yml`) mantiene el numero al dia. Ese workflow
+necesita el secret `DEPLOY_HOOK_URL` con un build hook de Netlify.
 
 ## SEO implementado
 
 - `title`, `description`, `canonical`, `robots`, `googlebot`
 - Open Graph y Twitter Cards
-- JSON-LD (`WebSite` + `WebPage`)
+- JSON-LD (`WebSite` + `WebPage` + `FAQPage`)
+- Respuesta renderizada en el HTML servido, sin depender de JS
 - `robots.txt` y `sitemap.xml`
 
 ## Nota

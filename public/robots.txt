@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Host: https://coudet-river.vercel.app
+Host: https://coudetenriver.site
 
-Sitemap: https://coudet-river.vercel.app/sitemap.xml
+Sitemap: https://coudetenriver.site/sitemap.xml

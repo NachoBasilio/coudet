@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { getArgentinaDate } from "../lib/days-counter";
 
-const CANONICAL_URL = "https://coudet-river.vercel.app/";
+const CANONICAL_URL = "https://coudetenriver.site/";
 
 export const GET: APIRoute = () => {
   const body = `<?xml version="1.0" encoding="UTF-8"?>
