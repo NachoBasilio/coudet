@@ -1,0 +1,17 @@
+name: Daily rebuild
+
+# The day counter is baked into the static HTML at build time so crawlers can
+# read it without running JS. A daily deploy keeps that number current.
+on:
+  schedule:
+    - cron: "10 3 * * *" # 00:10 in Buenos Aires (UTC-3)
+  workflow_dispatch:
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy hook
+        run: curl -fsSL -X POST "$DEPLOY_HOOK_URL"
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}

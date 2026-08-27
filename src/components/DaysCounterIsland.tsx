@@ -1,45 +1,24 @@
 import { useEffect, useState } from "preact/hooks";
+import { calculateDaysSince } from "../lib/days-counter";
 
 type DaysCounterIslandProps = {
   startDate: string;
+  /** Server-rendered value, so crawlers get the answer without running JS. */
+  initialValue: number;
 };
 
-const MILLISECONDS_PER_DAY = 86400000;
+export default function DaysCounterIsland({ startDate, initialValue }: DaysCounterIslandProps) {
+  const [counterValue, setCounterValue] = useState(initialValue);
 
-const calculateCounterValue = (startDate: string): string => {
-  const argentinaToday = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Argentina/Buenos_Aires"
-  }).format(new Date());
-
-  const startTime = Date.parse(`${startDate}T00:00:00Z`);
-  const currentTime = Date.parse(`${argentinaToday}T00:00:00Z`);
-
-  if (Number.isNaN(startTime) || Number.isNaN(currentTime)) return "1";
-
-  const elapsedDays = Math.floor((currentTime - startTime) / MILLISECONDS_PER_DAY);
-  return String(Math.max(1, elapsedDays + 1));
-};
-
-export default function DaysCounterIsland({ startDate }: DaysCounterIslandProps) {
-  const [counterValue, setCounterValue] = useState<string | null>(null);
-
+  // Corrects the build-time value against the visitor's real "today".
   useEffect(() => {
-    setCounterValue(calculateCounterValue(startDate));
+    setCounterValue(calculateDaysSince(startDate));
   }, [startDate]);
 
   return (
     <p className="counter" aria-live="polite">
-      {counterValue === null ? (
-        <>
-          <strong className="counter-loader" aria-hidden="true">•••</strong>
-          <span>Calculando días...</span>
-        </>
-      ) : (
-        <>
-          <strong>{counterValue}</strong>
-          <span>Días desde el primer día de Coudet</span>
-        </>
-      )}
+      <strong>{counterValue}</strong>
+      <span>Días desde el primer día de Coudet</span>
     </p>
   );
 }

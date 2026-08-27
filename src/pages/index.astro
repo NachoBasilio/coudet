@@ -1,30 +1,38 @@
 ---
 import DaysCounterIsland from "../components/DaysCounterIsland";
+import { calculateDaysSince, getArgentinaDate } from "../lib/days-counter";
 
 const coudetDayOne = "2026-03-05";
 const coudetDayOneLabel = "5 de marzo de 2026";
-const today = new Date();
+const argentinaToday = getArgentinaDate();
 
-const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+const daysInCharge = calculateDaysSince(coudetDayOne, argentinaToday);
+const daysLabel = daysInCharge === 1 ? "1 día" : `${daysInCharge} días`;
+const answerSentence = `Coudet lleva ${daysLabel} en River, contando desde el ${coudetDayOneLabel}.`;
+
 const siteName = "Coudet River";
 const pageTitle = "Hace cuánto está Coudet en River hoy | Días del Chacho en River";
 const pageDescription =
-  "Consultá en segundos hace cuánto está Coudet en River hoy, cuántos días lleva el Chacho en el cargo y desde cuándo arrancó su ciclo en River Plate.";
+  `${answerSentence} Contador actualizado todos los días con cuánto tiempo lleva el Chacho en el cargo en River Plate.`;
 const pageImage = "https://www.canal12misiones.com/wp-content/uploads/2026/02/Chacho-1.jpg";
 const secretImage = "https://www.ole.com.ar/images/2010/04/13/BJQLTgq--_720x0.jpg";
 const canonicalUrl = "https://coudet-river.vercel.app/";
 const pageKeywords =
   "hace cuanto esta coudet en river, hace cuánto está coudet, cuanto tiempo lleva coudet en river, desde cuando esta coudet en river, cuantos dias lleva coudet, contador coudet river, días de coudet en river";
 const isoPublishedTime = `${coudetDayOne}T00:00:00-03:00`;
-const isoModifiedTime = `${currentDate.toISOString().split("T")[0]}T00:00:00-03:00`;
+const isoModifiedTime = `${argentinaToday}T00:00:00-03:00`;
 const faqItems = [
   {
-    question: "¿Desde cuándo arranca este contador de Coudet en River?",
-    answer: `El conteo arranca en 1 desde el ${coudetDayOneLabel}, considerado como día 1 del ciclo.`
+    question: "¿Hace cuánto está Coudet en River?",
+    answer: `${answerSentence} El contador suma un día por cada nueva fecha del calendario.`
   },
   {
-    question: "¿Hace cuánto está Coudet en River hoy?",
-    answer: "Este sitio responde esa consulta mostrando los días exactos transcurridos desde el inicio de su ciclo."
+    question: "¿Cuántos días lleva Coudet en River?",
+    answer: `Lleva ${daysLabel} al día de hoy, tomando el ${coudetDayOneLabel} como día 1 del ciclo.`
+  },
+  {
+    question: "¿Desde cuándo está Coudet en River?",
+    answer: `Desde el ${coudetDayOneLabel}, fecha que este contador considera el primer día de su ciclo en River Plate.`
   },
   {
     question: "¿Cada cuánto se actualiza el número de días?",
@@ -101,6 +109,15 @@ const faqItems = [
               url: canonicalUrl
             },
             keywords: pageKeywords,
+            author: {
+              "@type": "Person",
+              name: "Ignadev",
+              url: "https://github.com/NachoBasilio"
+            },
+            speakable: {
+              "@type": "SpeakableSpecification",
+              cssSelector: ["h1", ".answer"]
+            },
             about: {
               "@type": "Person",
               name: "Eduardo Coudet",
@@ -307,12 +324,6 @@ const faqItems = [
         color: transparent;
       }
 
-      :global(.counter-loader) {
-        min-width: 3ch;
-        letter-spacing: 0.2em;
-        animation: pulse 1.1s ease-in-out infinite;
-      }
-
       :global(.counter span) {
         display: block;
         margin-top: 0.55rem;
@@ -321,6 +332,21 @@ const faqItems = [
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: var(--text-muted);
+      }
+
+      .answer {
+        margin: 0;
+        max-width: 46ch;
+        font-size: clamp(1.05rem, 3vw, 1.25rem);
+        line-height: 1.5;
+        color: var(--text);
+        text-wrap: balance;
+      }
+
+      .answer strong {
+        color: #ff5c6d;
+        font-weight: 700;
+        white-space: nowrap;
       }
 
       .intro {
@@ -417,6 +443,17 @@ const faqItems = [
         color: rgba(167, 171, 180, 0.6);
       }
 
+      .site-footer a {
+        color: var(--text-muted);
+        text-decoration-color: rgba(226, 23, 44, 0.6);
+        text-underline-offset: 3px;
+      }
+
+      .site-footer a:hover,
+      .site-footer a:focus-visible {
+        color: var(--river-red);
+      }
+
       /* Floating help trigger + photo dialog */
       .help-trigger {
         position: fixed;
@@ -510,16 +547,6 @@ const faqItems = [
         outline-offset: 3px;
       }
 
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 0.35;
-        }
-        50% {
-          opacity: 1;
-        }
-      }
-
       @keyframes dialog-in {
         from {
           opacity: 0;
@@ -544,6 +571,11 @@ const faqItems = [
 
       <h1>Hace cuánto está Coudet en River</h1>
 
+      <!-- Direct answer in server-rendered HTML: this is what search snippets quote. -->
+      <p class="answer">
+        Coudet lleva <strong>{daysLabel}</strong> en River, contando desde el {coudetDayOneLabel}.
+      </p>
+
       <figure class="image-wrap">
         <img
           src={pageImage}
@@ -553,7 +585,7 @@ const faqItems = [
       </figure>
 
       <section class="card counter-card" aria-label="Días de Coudet en River">
-        <DaysCounterIsland client:load startDate={coudetDayOne} />
+        <DaysCounterIsland client:load startDate={coudetDayOne} initialValue={daysInCharge} />
         <p class="counter-since">Desde el <strong>{coudetDayOneLabel}</strong></p>
       </section>
 
@@ -565,8 +597,17 @@ const faqItems = [
       <section class="card secondary-query" aria-labelledby="secondary-query-title">
         <h2 id="secondary-query-title">¿Desde cuándo está Coudet en River?</h2>
         <p>
-          El conteo toma como punto de partida el {coudetDayOneLabel} y suma una unidad por cada nueva fecha.
-          Si buscaste “hace cuánto está Coudet” o “cuántos días lleva Coudet en River”, acá tenés la respuesta al instante.
+          Coudet está en River desde el {coudetDayOneLabel}, es decir hace {daysLabel}.
+          El conteo toma esa fecha como día 1 y suma una unidad por cada nueva fecha del calendario.
+        </p>
+      </section>
+
+      <section class="card secondary-query" aria-labelledby="how-long-title">
+        <h2 id="how-long-title">¿Cuánto tiempo lleva el Chacho en el cargo?</h2>
+        <p>
+          Al día de hoy, {daysLabel} al frente del plantel de River Plate.
+          Si buscaste “hace cuánto está Coudet”, “cuántos días lleva Coudet en River” o
+          “desde cuándo dirige el Chacho”, la respuesta es la misma: {daysLabel}.
         </p>
       </section>
 
@@ -582,7 +623,10 @@ const faqItems = [
         </div>
       </section>
 
-      <p class="site-footer">Contador no oficial · Hincha data</p>
+      <p class="site-footer">
+        Contador no oficial · Hincha data · Hecha por
+        <a href="https://github.com/NachoBasilio" target="_blank" rel="noopener author">Ignadev</a>
+      </p>
     </main>
 
     <button type="button" class="help-trigger" aria-label="Ver la foto" data-open-photo>?</button>
